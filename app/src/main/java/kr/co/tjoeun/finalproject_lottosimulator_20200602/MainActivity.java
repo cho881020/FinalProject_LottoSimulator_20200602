@@ -62,6 +62,8 @@ public class MainActivity extends BaseActivity {
             winLottoNumArr[i] = 0;
         }
 
+        bonusNum = 0;
+
         for (int i=0 ; i < winLottoNumArr.length ; i++) {
 
             while (true) {
@@ -86,11 +88,34 @@ public class MainActivity extends BaseActivity {
 
         Arrays.sort(winLottoNumArr);
 
+
+        while (true) {
+
+            int randomNum = (int) (Math.random() * 45 + 1);
+
+            boolean isDuplicatedOk = true;
+
+            for (int num : winLottoNumArr) {
+                if (num == randomNum) {
+                    isDuplicatedOk = false;
+                    break;
+                }
+            }
+
+            if (isDuplicatedOk) {
+                bonusNum = randomNum;
+                break;
+            }
+        }
+
+
         for (int i=0 ; i < winNumTxts.size() ; i++) {
             int winNum = winLottoNumArr[i];
 
             winNumTxts.get(i).setText(winNum+"");
         }
+
+        binding.bonusNumTxt.setText(bonusNum+"");
 
     }
 
