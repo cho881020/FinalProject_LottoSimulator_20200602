@@ -12,4 +12,6 @@
     <string name="fourth_rank">4등 : </string>
     <string name="fifth_rank">5등 : </string>
     <string name="unranked">낙첨 : </string>
+    <string name="pause_auto_buying">자동 구매 중단하기</string>
+    <string name="resume_auto_buying">자동 구매 재개하기</string>
 </resources>
