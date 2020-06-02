@@ -122,19 +122,30 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
+//    등수 확인 코드
     void checkWinRank() {
+
+//        사용금액은 무조건 1000원 증가
         useMoney += 1000;
 
+//        증가된 사용금액을 화면에 반영 (중복 코드)
         binding.useMoneyTxt.setText(String.format("%,d원", useMoney));
 
 
+//        맞춘 갯수 저장 변수
         int correctCount = 0;
 
+//        내 입력 번호가 적힌 텍스트뷰들 (setValues 참고)을 꺼내봄.
         for (TextView myNumTxt : myNumTxts) {
+
+//            적혀있는 숫자 (String)를 int로 변경
             int myNum = Integer.parseInt(myNumTxt.getText().toString());
 
+//            내 숫자를 들고 => 당첨번호를 돌면서 확인
             for (int winNum : winLottoNumArr) {
 
+//                같은걸 찾았다면, 맞춘 갯수를 1개 증가
                 if (myNum == winNum) {
                     correctCount++;
                 }
@@ -142,17 +153,24 @@ public class MainActivity extends BaseActivity {
             }
         }
 
+
+//        맞춘 갯수에 따른 등수 판정 + 당첨금액 누적
         if (correctCount == 6) {
             winMoney += 1300000000;
             firstRankCount++;
         }
         else if (correctCount == 5) {
 
+//            5개를 맞췄을땐, 보너스번호 여부에 따라 2/3등 갈림.
             boolean isBonusNumCorrect = false;
 
+//            내 입력 번호 텍스트뷰 목록을 돌면서 확인
             for (TextView myNumTxt : myNumTxts) {
+//                텍스트뷰에 적힌 내용을 int로 변경
                 int myNum = Integer.parseInt(myNumTxt.getText().toString());
 
+//                보너스 번호와 비교해서, 같은게 있다면 보너스를 맞췄다고 처리.
+//                한번도 이 분기에 못들어왔다 => 보너스 못맞춤.
                 if (myNum == bonusNum) {
                     isBonusNumCorrect = true;
                     break;
@@ -160,6 +178,7 @@ public class MainActivity extends BaseActivity {
 
             }
 
+//            보너스 맞추면 2등, 아니면 3등
             if (isBonusNumCorrect) {
                 winMoney += 54000000;
                 secondRankCount++;
@@ -175,18 +194,23 @@ public class MainActivity extends BaseActivity {
             fourthRankCount++;
         }
         else if (correctCount == 3) {
+//            5등은 돈으로 가져가지 않고, 로또 5장 추가 구매.
+//            사용 금액을 5000원 줄여준다. => or 당첨금액을 5천원 증가로 해도 됨.
             useMoney -= 5000;
             fifthRankCount++;
         }
         else {
+//            3개도 못맞췄다면 전부 낙첨 처리.
             unrankedCount++;
         }
 
 
+//        사용 금액 / 당첨 금액 화면에 표시
         binding.winMoneyTxt.setText(String.format("%,d원", winMoney));
         binding.useMoneyTxt.setText(String.format("%,d원", useMoney));
 
 
+//        각 등수별 (낙첨 포함) 횟수를 화면에 표시
         binding.firstRankTxt.setText(String.format("%,d회", firstRankCount));
         binding.secondRankTxt.setText(String.format("%,d회", secondRankCount));
         binding.thirdRankTxt.setText(String.format("%,d회", thirdRankCount));
