@@ -199,19 +199,30 @@ public class MainActivity extends BaseActivity {
 
     void makeLottoWinNumbers() {
 
+//        지난주 당첨번호가 새 당첨번호에 영향 주는것을 막기위한 조치
+//        기존 당첨번호를 모두 0 으로 세팅
+
         for (int i=0 ; i < winLottoNumArr.length ; i++) {
             winLottoNumArr[i] = 0;
         }
 
+//        보너스 번호도 0으로 세팅
         bonusNum = 0;
 
+//        당첨번호 6개를 뽑기 위한 for
         for (int i=0 ; i < winLottoNumArr.length ; i++) {
 
+//            조건에 맞는 (중복 아닌) 숫자를 뽑을때까지 무한반복
             while (true) {
 
+//                1~45 중 하나 랜덤
                 int randomNum = (int) (Math.random() * 45 + 1);
 
+//                중복검사 결과 저장 변수 => 일단 맞다고 했다가, 수틀리면 false 변경
                 boolean isDuplicatedOk = true;
+
+//                당첨번호중 같은게 있다면 false로 변경.
+//                한번도 같은게 없었다면, true로 유지
                 for (int num : winLottoNumArr) {
                     if (num == randomNum) {
                         isDuplicatedOk = false;
@@ -219,21 +230,30 @@ public class MainActivity extends BaseActivity {
                     }
                 }
 
+//                중복 검사가 통과되었다면
                 if (isDuplicatedOk) {
+//                    당첨번호로 등록
                     winLottoNumArr[i] = randomNum;
+//                    무한반복 탈출 => 다음 당첨번호 뽑으러 감. (for문 다음 i)
                     break;
                 }
             }
 
         }
 
+
+//        6개를 뽑는 for문이 다 돌고 나면 => 순서가 뒤죽박죽.
+//        Arrays 클래스의 static메쏘드 활용해서 오름차순 정렬.
         Arrays.sort(winLottoNumArr);
 
 
+//        보너스번호를 뽑는 무한반복. => 1개만 뽑는다. for문은 없고, 바로 무한반복
         while (true) {
 
+//            1~45를 랜덤 추출
             int randomNum = (int) (Math.random() * 45 + 1);
 
+//            중복검사 진행 (앞과 같은 로직)
             boolean isDuplicatedOk = true;
 
             for (int num : winLottoNumArr) {
@@ -250,12 +270,15 @@ public class MainActivity extends BaseActivity {
         }
 
 
+//        당첨번호들을 텍스트뷰에 표시.
         for (int i=0 ; i < winNumTxts.size() ; i++) {
             int winNum = winLottoNumArr[i];
 
+//            화면에 있는 당첨번호 텍스트뷰들을 ArrayList에 담아두고 (setValues참고) 활용.
             winNumTxts.get(i).setText(winNum+"");
         }
 
+//        보너스번호도 화면에 표시.
         binding.bonusNumTxt.setText(bonusNum+"");
 
     }
