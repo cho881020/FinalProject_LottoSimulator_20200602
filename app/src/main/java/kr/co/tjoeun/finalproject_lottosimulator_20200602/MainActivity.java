@@ -72,18 +72,29 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
+//        자동구매를 누르면
         binding.buyAutoLottoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+//                지금 구매를 안돌리고 있다면
                 if (!isAutoBuyRunning) {
+//                    구매 시작 코드를 할일로 등록시키자. => mHandler가 실행.
                     mHandler.post(buyLottoRunnable);
+//                    구매가 돌아가고 있다고 명시
                     isAutoBuyRunning = true;
+//                    버튼의 문구도 중단하기로 변경
                     binding.buyAutoLottoBtn.setText(getResources().getString(R.string.pause_auto_buying));
                 }
+//                구매가 돌아 가고 있다면
                 else {
+//                    예정된 다음 구매 행동을 할일에서 제거.
+//                    더 이상 할일이 없으니, 정지 된다.
                     mHandler.removeCallbacks(buyLottoRunnable);
+//                    지금 구매중이 아니라고 명시.
                     isAutoBuyRunning = false;
+//                    다시 누르면 재개한다고 알려줌.
+//                    문구를 res / values / strings.xml 에서 가져오는 코드
                     binding.buyAutoLottoBtn.setText(getResources().getString(R.string.resume_auto_buying));
                 }
 
@@ -91,6 +102,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+//        한장을 구매할땐 => 로또 번호 만들고 / 등수 확인만 실행.
         binding.buyOneLottoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +118,8 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setValues() {
 
+//        당첨번호 텍스트뷰들을 => ArrayList에 담아둠.
+//        당첨번호를 적어줄때 편리하게 짜려고.
         winNumTxts.add(binding.winNumTxt01);
         winNumTxts.add(binding.winNumTxt02);
         winNumTxts.add(binding.winNumTxt03);
@@ -113,6 +127,7 @@ public class MainActivity extends BaseActivity {
         winNumTxts.add(binding.winNumTxt05);
         winNumTxts.add(binding.winNumTxt06);
 
+//        내 입력 번호도 같은 처리.
         myNumTxts.add(binding.myNumTxt01);
         myNumTxts.add(binding.myNumTxt02);
         myNumTxts.add(binding.myNumTxt03);
