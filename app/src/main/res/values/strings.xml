@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">FinalProject_LottoSimulator</string>
+    <string name="app_name">로또 시뮬레이터</string>
+    <string name="win_number">당첨 번호</string>
+    <string name="my_number">내 입력 번호</string>
+    <string name="buy_one_lotto">로또 한장 구매하기</string>
 </resources>
