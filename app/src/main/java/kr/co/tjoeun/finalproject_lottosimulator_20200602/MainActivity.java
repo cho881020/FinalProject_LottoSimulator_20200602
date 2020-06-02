@@ -41,17 +41,28 @@ public class MainActivity extends BaseActivity {
 
     boolean isAutoBuyRunning = false;
 
+//    같은 핸들러를 여러곳에서 사용하니까 => 멤버변수로 생성. (공유하려고)
     Handler mHandler = new Handler();
+
+//    구매 로직 코드도 => 여러곳에서 사용하려고 => 멤버변수로 생성.
     Runnable buyLottoRunnable = new Runnable() {
         @Override
         public void run() {
 
+//            사용한 금액이 1천만원 이하라면
             if (useMoney < 10000000) {
+
+//                로또 번호 생성 / 등수 맞추기 진행
                 makeLottoWinNumbers();
                 checkWinRank();
+
+//                이 행동을 다시 할일로 등록해달라.
+//                 => 반복으로 동작하게 되는 이유.
                 mHandler.post(buyLottoRunnable);
             }
             else {
+//                돈을 다 썼으면 로또 구매 종료 안내.
+//                추가로 할일 등록 X => 반복되지 않는 이유.
                 Toast.makeText(mContext, "로또 구매를 종료합니다.", Toast.LENGTH_SHORT).show();
             }
 
