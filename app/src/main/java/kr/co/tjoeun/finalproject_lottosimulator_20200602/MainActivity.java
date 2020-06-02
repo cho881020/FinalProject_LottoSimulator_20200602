@@ -25,6 +25,11 @@ public class MainActivity extends BaseActivity {
 
     long useMoney = 0L;
 
+    long winMoney = 0L;
+
+
+    List<TextView> myNumTxts = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +64,75 @@ public class MainActivity extends BaseActivity {
         winNumTxts.add(binding.winNumTxt05);
         winNumTxts.add(binding.winNumTxt06);
 
+        myNumTxts.add(binding.myNumTxt01);
+        myNumTxts.add(binding.myNumTxt02);
+        myNumTxts.add(binding.myNumTxt03);
+        myNumTxts.add(binding.myNumTxt04);
+        myNumTxts.add(binding.myNumTxt05);
+        myNumTxts.add(binding.myNumTxt06);
+
     }
 
     void checkWinRank() {
         useMoney += 1000;
 
         binding.useMoneyTxt.setText(String.format("%,d원", useMoney));
+
+
+        int correctCount = 0;
+
+        for (TextView myNumTxt : myNumTxts) {
+            int myNum = Integer.parseInt(myNumTxt.getText().toString());
+
+            for (int winNum : winLottoNumArr) {
+
+                if (myNum == winNum) {
+                    correctCount++;
+                }
+
+            }
+        }
+
+        if (correctCount == 6) {
+            winMoney += 1300000000;
+        }
+        else if (correctCount == 5) {
+
+            boolean isBonusNumCorrect = false;
+
+            for (TextView myNumTxt : myNumTxts) {
+                int myNum = Integer.parseInt(myNumTxt.getText().toString());
+
+                if (myNum == bonusNum) {
+                    isBonusNumCorrect = true;
+                    break;
+                }
+
+            }
+
+            if (isBonusNumCorrect) {
+                winMoney += 54000000;
+            }
+            else {
+                winMoney += 1450000;
+            }
+
+        }
+        else if (correctCount == 4) {
+            winMoney += 50000;
+        }
+        else if (correctCount == 3) {
+            useMoney -= 5000;
+        }
+        else {
+
+        }
+
+
+        binding.winMoneyTxt.setText(String.format("%,d원", winMoney));
+        binding.useMoneyTxt.setText(String.format("%,d원", useMoney));
+
+
     }
 
     void makeLottoWinNumbers() {
