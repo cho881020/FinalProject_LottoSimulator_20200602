@@ -3,4 +3,5 @@
     <string name="win_number">당첨 번호</string>
     <string name="my_number">내 입력 번호</string>
     <string name="buy_one_lotto">로또 한장 구매하기</string>
+    <string name="use_money">사용 금액 : </string>
 </resources>
